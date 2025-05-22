@@ -109,8 +109,7 @@ expressed are however those of the author(s) only and do not necessarily reflect
 those of the European Union or the European Commission. Neither the European
 Union nor the European Commission can be held responsible for them.
 
-The author gratefully acknowledges computing time on the supercomputer JURECA
-[212] at Forschungszentrum Jülich under grant no. solsur.
+The author gratefully acknowledges computing time on the supercomputer JURECA at Forschungszentrum Jülich under grant no. solsur.
 ## License
 SOLPS-NN is licensed under the MIT license.
 
