@@ -116,4 +116,5 @@ SOLPS-NN is licensed under the MIT license.
 Copyright (c) 2024 Stefan Dasbach (Forschungszentrum Jülich)
 ## Citation
 Users of the model are kindly asked to cite all of the following publications:
-- Dasbach, S., & Wiesen, S. (2023). Towards fast surrogate models for interpolation of tokamak edge plasmas. _Nuclear Materials and Energy_, _34_, 101396.
+- Dasbach, S., & Wiesen, S. (2023). Towards fast surrogate models for interpolation of tokamak edge plasmas. Nuclear Materials and Energy, 34, 101396. https://doi.org/10.1016/j.nme.2023.101396
+- Wiesen, S., et al. (2024). Data-driven models in fusion exhaust: AI methods and perspectives. Nuclear Fusion, 64(8), 086046. https://doi.org/10.1088/1741-4326/ad5a1d
