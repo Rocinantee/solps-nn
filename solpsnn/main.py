@@ -57,7 +57,7 @@ class Model:
         # Selecting model folder
         if item in ['te','ti','pwmxap','fnixap','psol']:
             model_folder = os.path.join(data_folder,item)
-        elif item in ['na','ua','rqrad']:
+        elif item in ['na','ua']:
             if species == None:
                 raise ValueError('Particle species needs to be specified')
             species_index = species_dict[species]
@@ -103,12 +103,14 @@ class Model:
         """Top level access to quantile transformer, for debugging purposes"""
         return self.qtND.inverse_transform(y)
     def predict_fold(self,X,fold,normalized=False):
-        """Prediction of a single fold, for debugging purposes"""
+        """Prediction of a single fold (1-5), for debugging purposes"""
+        if fold not in range(1,len(self.models)+1):
+            raise ValueError(f'fold must be between 1 and {len(self.models)}, got {fold}')
         X_normed = self.normalize(X)
         if normalized:
             return self.models[fold-1].predict(X_normed)
         else:
-            return self.qtND.inverse_transform(self.models[fold].predict(X_normed))
+            return self.qtND.inverse_transform(self.models[fold-1].predict(X_normed))
     def predict(self,X):
         """Full model prediction"""
         X_normed = self.normalize(X)

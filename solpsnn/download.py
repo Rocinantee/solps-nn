@@ -45,7 +45,7 @@ def calculate_file_hash(file_path):
 
 def download_file(url, file_path):
     """Download a file from a URL and save it to the given path."""
-    response = requests.get(url, stream=True)
+    response = requests.get(url, stream=True, timeout=60)
     response.raise_for_status()
     with open(file_path, "wb") as f:
         for chunk in response.iter_content(chunk_size=8192):
@@ -76,4 +76,7 @@ def download_model(item='te',species=None,config_path=None):
             if not verify_file(expected_hash,file_path):
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
                 download_file(file_info["url"], file_path)
+                if calculate_file_hash(file_path) != expected_hash:
+                    os.remove(file_path)
+                    raise IOError(f"Downloaded {file_info['filename']} is corrupt (hash mismatch). Please retry the download.")
                 print(f"Downloaded {file_info['filename']}.")

@@ -13,13 +13,13 @@ keras.backend.clear_session()
 R=[6.2] # Major radius
 B=[5.3] # Magnetic field strength
 Tcore=[100*10**6] # 100MW input power
-Dpuff=10**np.linspace(20,24,20) # Scan 100 deuterium gas puff values
+Dpuff=10**np.linspace(20,24,20) # Scan 20 deuterium gas puff values
 Npuff=[10**20] # Fixed nitrogen gaspuff
-Dcore=[9.1*10**21] # Fixed deuterioum core fuelling
+Dcore=[9.1*10**21] # Fixed deuterium core fuelling
 Dperp=[0.3] # Cross-field particle transport coefficient
 Chi=[1] # Cross-field heat transport coefficient
 
-# Creating input array with size (100,8)
+# Creating input array with size (20,8)
 X_input = np.array(np.meshgrid(R,B,Tcore,Dpuff,Npuff,Dcore,Dperp,Chi),dtype='float').T.reshape(-1,8)
 
 # Making the model prediction
@@ -51,7 +51,7 @@ ax=axs[1]
 ax.plot(X_input[:,3],nesepa,label='Outer target',color='blue')
 ax.plot(X_input[:,3],nesepm,label='Outer midplane',color='orange')
 ax.set_xlabel('Deuterium gas puff [1/s]')
-ax.set_ylabel('Deuterium ion density [$\mathrm{m}^{-3}$]')
+ax.set_ylabel(r'Deuterium ion density [$\mathrm{m}^{-3}$]')
 ax.set_yscale('log')
 ax.set_xscale('log')
 ax.grid()
