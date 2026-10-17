@@ -9,7 +9,10 @@ tensorflow 2.3.1
 scikit-learn 0.23.2
 matplotlib 3.3.1
 ```
-The SOLPS-NN package should work fine also with later versions of the corresponding packages, but if problems occur it is recommended to fall back to these versions
+The SOLPS-NN package should work fine also with later versions of the corresponding packages, but if problems occur it is recommended to fall back to these versions.
+The exception is TensorFlow: version 2.16 and later ship with Keras 3, which cannot load the SavedModel format the networks are stored in, so TensorFlow < 2.16 is required (which in turn requires Python <= 3.11 and numpy < 2).
+Downloading the models additionally requires the `requests` package.
+All requirements can be installed with `pip install -r requirements.txt`.
 The SOLPS-NN package should work on all operating systems, but has only been tested on Linux.
 
 ## Usage
@@ -52,7 +55,7 @@ The model can predict various  2D fields on the 104x50 computational grid:
 Additionally the model can predict the following scalar quantities
 - `item='pwmxap'` Peak heatflux at the outer (LFS) divertor target $\mathrm{W}/\mathrm{m}^2$
 - `item='fnixap'` Integrated deuterium ion flux to the outer (LFS) divertor target  $\mathrm{atoms}/\mathrm{s}$
-- `item='psol'` Power crossing the separtrix from core to SOL plasma $\mathrm{W}$
+- `item='psol'` Power crossing the separatrix from core to SOL plasma $\mathrm{W}$
 
 To perform predictions after the model has been initialized the `Model.predict` method can be called.
 The method expects as input a numpy.array of shape (N,8). Here N>=1 specifies the number of predictions that are made by the model. Especially when executing the model on GPUs it is way faster to execute multi predictions at once, in contrast to multiple calls of the models  `predict` method.
@@ -90,14 +93,14 @@ The model has been trained with simulations spanning the following parameter ran
 
 Using the model to make predictions outside of these ranges is possible but not recommended.
 It is doubtful whether the model predictions for such extrapolations contain any physical meaning.
-### Memory managment
+### Memory management
 The neural networks loaded in each model are quite large, such that loading multiple models might exceed the systems memory capacity.
 To circumvent this the predictions for the different plasma properties should be made one after another such, that only one model is loaded at the time.
 Before loading a new model it is recommended to invoke `keras.backend.clear_session()` to remove all network layers still occupying the keras namespace and system memory.
 ### Model accuracy
 The model has been trained using a database of fluid neutral SOLPS-ITER simulations.
 This reduced fidelity simulation setup introduces unphysical simulation artifact into the model here
-The most noticeable is the occurance of large temperature spikes at the lower edge of the outer target in the private flux region. In these cases also the peak heatflux to the target might be unphysically high, as it occurs at this location.
+The most noticeable is the occurrence of large temperature spikes at the lower edge of the outer target in the private flux region. In these cases also the peak heatflux to the target might be unphysically high, as it occurs at this location.
 ## Acknowledgement
 This package has been developed as part of the PhD Thesis of S. Dasbach conducted at the Forschungszentrum Jülich.
 Further improvements are currently developed at the Dutch Institute for Fundamental Energy Research.
